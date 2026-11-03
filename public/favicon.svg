@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#181820"/>
+  <rect x="1" y="1" width="30" height="30" rx="7" stroke="#A78BFA" stroke-width="1.5" stroke-opacity="0.4"/>
+  <!-- Arcade Joystick / D-pad icon -->
+  <circle cx="16" cy="11" r="5" fill="#F472B6"/>
+  <rect x="14.5" y="15" width="3" height="7" rx="1.5" fill="#A78BFA"/>
+  <ellipse cx="16" cy="23" rx="7" ry="2.5" fill="#60A5FA" fill-opacity="0.8"/>
+  <circle cx="12" cy="10" r="1.5" fill="#FFFFFF" fill-opacity="0.7"/>
+</svg>
