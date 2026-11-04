@@ -13,6 +13,12 @@ import {
 } from 'lucide-react';
 
 const ICON_MAP = {
+  zap: Zap,
+  brain: Brain,
+  hash: Hash,
+  keyboard: Keyboard,
+  palette: Palette,
+  target: Target,
   Zap,
   Brain,
   Hash,
@@ -22,7 +28,8 @@ const ICON_MAP = {
 };
 
 export default function GameCard({ game, onSelect }) {
-  const IconComponent = ICON_MAP[game.iconName] || Sparkles;
+  const iconKey = (game.icon || game.iconName || '').toLowerCase();
+  const IconComponent = ICON_MAP[iconKey] || ICON_MAP[game.iconName] || Sparkles;
 
   const handleClick = () => {
     if (onSelect) {
@@ -32,7 +39,7 @@ export default function GameCard({ game, onSelect }) {
 
   return (
     <article 
-      className={`game-card game-card-${game.id}`}
+      className={`game-card game-card-${game.slug || game.id}`}
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -42,7 +49,7 @@ export default function GameCard({ game, onSelect }) {
           handleClick();
         }
       }}
-      aria-label={`${game.title}: ${game.statusLabel}`}
+      aria-label={`${game.name || game.title}: ${game.statusLabel || game.status}`}
       style={{
         '--card-accent': game.accentColor,
         '--card-glow': game.borderGlow
@@ -70,14 +77,14 @@ export default function GameCard({ game, onSelect }) {
           </div>
 
           <div className="card-badges">
-            {game.isFirstPlanned ? (
+            {game.isFirstPlanned || game.featured ? (
               <span className="badge badge-first">
                 <Flame size={12} />
-                <span>{game.badgeText}</span>
+                <span>{game.badgeText || 'First Up'}</span>
               </span>
             ) : (
               <span className="badge badge-coming">
-                <span>{game.badgeText}</span>
+                <span>{game.badgeText || 'Coming Soon'}</span>
               </span>
             )}
             <span 
@@ -94,7 +101,7 @@ export default function GameCard({ game, onSelect }) {
 
         {/* Title and Description */}
         <h3 className="card-title">
-          {game.title}
+          {game.name || game.title}
         </h3>
 
         <p className="card-description">
@@ -105,11 +112,11 @@ export default function GameCard({ game, onSelect }) {
         <div className="card-meta-chips">
           <div className="meta-chip">
             <Clock size={12} />
-            <span>{game.estimatedPlayTime}</span>
+            <span>{game.estimatedPlayTime || '1-2 mins'}</span>
           </div>
           <span>•</span>
           <div className="meta-chip">
-            <span>{game.vibe}</span>
+            <span>{game.vibe || 'Indie Arcade'}</span>
           </div>
         </div>
       </div>
@@ -117,7 +124,7 @@ export default function GameCard({ game, onSelect }) {
       {/* Card Action Footer */}
       <div className="game-card-footer">
         <span className="action-label">
-          {game.isFirstPlanned ? 'Available Soon' : 'Coming Soon'}
+          {game.status === 'AVAILABLE' ? 'Play Game' : (game.isFirstPlanned || game.featured ? 'Available Soon' : 'Coming Soon')}
         </span>
         <div className="action-arrow-btn" aria-hidden="true">
           <ArrowRight size={15} />
