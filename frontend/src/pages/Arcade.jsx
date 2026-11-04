@@ -1,13 +1,12 @@
 import React from 'react';
 import GameGrid from '../components/GameGrid';
-import { Sparkles, Gamepad2 } from 'lucide-react';
 
-export default function Arcade({ onNotify }) {
+export default function Arcade({ games, loading, error, onRetry, onNotify }) {
   const handleSelectGame = (game) => {
     if (onNotify) {
       onNotify({
-        title: game.title,
-        message: game.comingSoonMessage
+        title: game.name || game.title,
+        message: game.comingSoonMessage || 'Game is coming soon!'
       });
     }
   };
@@ -15,6 +14,10 @@ export default function Arcade({ onNotify }) {
   return (
     <main className="main-content" style={{ paddingTop: '2.5rem' }}>
       <GameGrid 
+        games={games}
+        loading={loading}
+        error={error}
+        onRetry={onRetry}
         onSelectGame={handleSelectGame}
         title="Arcade Collection"
         subtitle="Browse all mini-games, filter by your favorite genre, and get ready to challenge yourself."

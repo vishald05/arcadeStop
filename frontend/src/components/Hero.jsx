@@ -1,8 +1,7 @@
 import React from 'react';
 import { ArrowDown, Shuffle, Zap, Sparkles, Terminal } from 'lucide-react';
-import { GAMES } from '../data/games';
 
-export default function Hero({ onNotify }) {
+export default function Hero({ onNotify, games = [] }) {
   const handleScrollToGames = (e) => {
     e.preventDefault();
     const element = document.getElementById('games-collection');
@@ -12,21 +11,35 @@ export default function Hero({ onNotify }) {
   };
 
   const handleSurpriseMe = () => {
+    if (!games || games.length === 0) {
+      if (onNotify) {
+        onNotify({
+          title: 'Catalog Syncing...',
+          message: 'The arcade catalog is currently syncing with the backend. Please check back in a moment!',
+          icon: Zap
+        });
+      }
+      return;
+    }
+
     // Pick a random game from the collection
-    const randomIndex = Math.floor(Math.random() * GAMES.length);
-    const selected = GAMES[randomIndex];
+    const randomIndex = Math.floor(Math.random() * games.length);
+    const selected = games[randomIndex];
     
     if (onNotify) {
       onNotify({
-        title: `Surprise Pick: ${selected.title}!`,
-        message: selected.comingSoonMessage,
+        title: `Surprise Pick: ${selected.name || selected.title}!`,
+        message: selected.comingSoonMessage || 'Get ready for one more game!',
         icon: Zap
       });
     }
   };
 
-  // The first planned game is Reaction Rush
-  const firstGame = GAMES.find(g => g.isFirstPlanned) || GAMES[0];
+  // Find the featured or first planned game
+  const spotlightGame = games.find(g => g.featured || g.isFirstPlanned) || games[0] || {
+    name: 'Reaction Rush',
+    title: 'Reaction Rush'
+  };
 
   return (
     <section className="hero-section" aria-labelledby="hero-heading">
@@ -35,8 +48,8 @@ export default function Hero({ onNotify }) {
           {/* Left Column: Hero Content */}
           <div className="hero-content">
             <div className="hero-pill">
-              <span className="hero-pill-badge">Phase 1</span>
-              <span>The Arcade Foundation</span>
+              <span className="hero-pill-badge">Phase 1.5</span>
+              <span>Spring Boot Integration</span>
             </div>
 
             <h1 id="hero-heading" className="hero-title">
@@ -82,7 +95,7 @@ export default function Hero({ onNotify }) {
                   <span className="screen-dot yellow"></span>
                   <span className="screen-dot green"></span>
                 </div>
-                <div className="screen-status-label">SYS_01 // READY</div>
+                <div className="screen-status-label">SYS_01 // ONLINE</div>
               </div>
 
               <div className="screen-core-card">
@@ -97,7 +110,7 @@ export default function Hero({ onNotify }) {
                   <div className="spotlight-icon-wrap">
                     <Zap size={32} />
                   </div>
-                  <h3 className="spotlight-title">{firstGame.title}</h3>
+                  <h3 className="spotlight-title">{spotlightGame.name || spotlightGame.title}</h3>
                   <p className="spotlight-tagline">First game arriving to the arcade</p>
                 </div>
 
@@ -108,7 +121,7 @@ export default function Hero({ onNotify }) {
                   </div>
                   <div className="ticker-item">
                     <Terminal size={13} />
-                    <span>Local Records</span>
+                    <span>Spring Boot API</span>
                   </div>
                 </div>
               </div>

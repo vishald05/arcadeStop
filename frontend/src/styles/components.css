@@ -987,3 +987,158 @@
     display: flex;
   }
 }
+
+/* --------------------------------------------------------------------------
+   9. Dynamic Catalog States: Skeletons, Errors & Empty States
+   -------------------------------------------------------------------------- */
+.skeleton-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-card);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 100%
+  );
+  animation: skeleton-pulse 1.6s infinite ease-in-out;
+}
+
+@keyframes skeleton-pulse {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-box {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+}
+
+.skeleton-icon {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.skeleton-badge {
+  width: 4.5rem;
+  height: 1.25rem;
+  border-radius: var(--radius-full);
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-desc-line1 {
+  width: 100%;
+  height: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-desc-line2 {
+  width: 85%;
+  height: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-footer-bar {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skeleton-meta {
+  width: 40%;
+  height: 0.875rem;
+}
+
+.skeleton-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+/* Error State */
+.catalog-error-state {
+  max-width: 580px;
+  margin: 2rem auto;
+  background: var(--bg-card);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.error-icon-wrap {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 1.25rem auto;
+  border-radius: var(--radius-md);
+  background: rgba(239, 68, 68, 0.12);
+  color: #EF4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-title {
+  font-size: 1.35rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.error-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+/* Empty State */
+.catalog-empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border-subtle);
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.empty-state-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
