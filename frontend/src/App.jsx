@@ -6,6 +6,7 @@ import NotificationToast from './components/NotificationToast';
 import Home from './pages/Home';
 import Arcade from './pages/Arcade';
 import Records from './pages/Records';
+import GamePage from './pages/GamePage';
 import { useGames } from './hooks/useGames';
 
 export default function App() {
@@ -54,6 +55,10 @@ export default function App() {
           } 
         />
         <Route path="/records" element={<Records />} />
+        <Route 
+          path="/games/:slug" 
+          element={<GamePage games={games} loading={loading} error={error} />} 
+        />
         {/* Fallback route */}
         <Route 
           path="*" 
