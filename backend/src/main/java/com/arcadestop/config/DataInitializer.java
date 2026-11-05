@@ -32,7 +32,7 @@ public class DataInitializer implements CommandLineRunner {
                 "Test your reflexes. Wait for the signal and click as fast as you can.",
                 "Reflex",
                 "zap",
-                GameStatus.COMING_SOON,
+                GameStatus.AVAILABLE,
                 true
             ),
             new Game(

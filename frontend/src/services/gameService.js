@@ -7,7 +7,7 @@ const THEME_DECORATIONS = {
     accentSecondary: '#A78BFA',
     cardGradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(167, 139, 250, 0.04) 100%)',
     borderGlow: 'rgba(245, 158, 11, 0.3)',
-    badgeText: 'First Up',
+    badgeText: 'Play Now',
     estimatedPlayTime: '< 1 min',
     vibe: 'Speed & Focus',
     comingSoonMessage: 'Reaction Rush is our first planned game! It is currently in active development and will be playable very soon.'

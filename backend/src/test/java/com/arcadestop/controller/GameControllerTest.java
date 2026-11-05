@@ -43,7 +43,7 @@ class GameControllerTest {
                 .andExpect(jsonPath("$", hasSize(6)))
                 .andExpect(jsonPath("$[0].slug", is("reaction-rush")))
                 .andExpect(jsonPath("$[0].featured", is(true)))
-                .andExpect(jsonPath("$[0].status", is(GameStatus.COMING_SOON.name())));
+                .andExpect(jsonPath("$[0].status", is(GameStatus.AVAILABLE.name())));
     }
 
     @Test
@@ -57,7 +57,7 @@ class GameControllerTest {
                 .andExpect(jsonPath("$.category", is("Reflex")))
                 .andExpect(jsonPath("$.icon", is("zap")))
                 .andExpect(jsonPath("$.featured", is(true)))
-                .andExpect(jsonPath("$.status", is("COMING_SOON")));
+                .andExpect(jsonPath("$.status", is("AVAILABLE")));
     }
 
     @Test

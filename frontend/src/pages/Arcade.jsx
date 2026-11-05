@@ -1,9 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import GameGrid from '../components/GameGrid';
 
 export default function Arcade({ games, loading, error, onRetry, onNotify }) {
+  const navigate = useNavigate();
+
   const handleSelectGame = (game) => {
-    if (onNotify) {
+    if (game.status === 'AVAILABLE') {
+      navigate(`/games/${game.slug}`);
+    } else if (onNotify) {
       onNotify({
         title: game.name || game.title,
         message: game.comingSoonMessage || 'Game is coming soon!'
