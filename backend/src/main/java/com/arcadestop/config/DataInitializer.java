@@ -50,7 +50,7 @@ public class DataInitializer implements CommandLineRunner {
                 "Guess the hidden number using clues before you run out of attempts.",
                 "Puzzle",
                 "hash",
-                GameStatus.COMING_SOON,
+                GameStatus.AVAILABLE,
                 false
             ),
             new Game(
@@ -83,18 +83,29 @@ public class DataInitializer implements CommandLineRunner {
         );
 
         int addedCount = 0;
-        for (Game game : seedGames) {
-            if (!gameRepository.existsBySlug(game.getSlug())) {
-                gameRepository.save(game);
+        int updatedCount = 0;
+        for (Game seedGame : seedGames) {
+            java.util.Optional<Game> existing = gameRepository.findBySlug(seedGame.getSlug());
+            if (existing.isEmpty()) {
+                gameRepository.save(seedGame);
                 addedCount++;
-                logger.info("Seeded game: {}", game.getName());
+                logger.info("Seeded game: {}", seedGame.getName());
+            } else {
+                Game game = existing.get();
+                if (game.getStatus() != seedGame.getStatus()) {
+                    logger.info("Updating status for existing game '{}' from {} to {}",
+                            game.getName(), game.getStatus(), seedGame.getStatus());
+                    game.setStatus(seedGame.getStatus());
+                    gameRepository.save(game);
+                    updatedCount++;
+                }
             }
         }
 
-        if (addedCount > 0) {
-            logger.info("Successfully seeded {} new games into the catalog.", addedCount);
+        if (addedCount > 0 || updatedCount > 0) {
+            logger.info("Catalog sync complete. Added: {}, Updated: {}", addedCount, updatedCount);
         } else {
-            logger.info("All seed games already exist in the database. No duplicates added.");
+            logger.info("All seed games already exist with up-to-date statuses. No changes made.");
         }
     }
 }

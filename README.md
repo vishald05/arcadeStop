@@ -2,15 +2,13 @@
 
 > **"Your stop for one more game."**
 
-Live Link : Coming Soon
-
 ArcadeStop is a mini browser gaming platform designed with a modern indie arcade aesthetic, built for quick breathers, endless retries, and instant zero-setup gaming.
 
 ---
 
 ## ⚡ Phase 2: Reaction Rush
 
-Reaction Rush is ArcadeStop's first fully playable mini-game. Test your reflexes against a high-resolution browser timer across 5 attempts per session, with anonymous personal record tracking powered by Spring Boot and PostgreSQL.
+Reaction Rush is ArcadeStop's reflex challenge. Test your reflexes against a high-resolution browser timer across 5 attempts per session, with anonymous personal record tracking powered by Spring Boot and PostgreSQL.
 
 ### How to Play Reaction Rush
 
@@ -44,11 +42,42 @@ Reaction Rush is ArcadeStop's first fully playable mini-game. Test your reflexes
 
 ---
 
+## 🥷 Phase 3: Number Ninja
+
+Number Ninja is ArcadeStop's second fully playable game. Use mathematical deduction to uncover a secret integer between 1 and 100 within 7 attempts, guided by dynamic range narrowing and personal statistics tracking.
+
+### How to Play Number Ninja
+
+1. **Access the Game**: Click **Play Now** on the **Number Ninja** card on the homepage or in the [Arcade](/arcade) collection.
+2. **Start Game**: Click **Start Game** to initiate a new session with a secretly chosen random integer (1–100).
+3. **Make Guesses**:
+   - Enter your guess in the prominent numeric input and click **Guess** (or press <kbd>Enter</kbd>).
+   - Valid inputs must be integers between 1 and 100.
+   - Invalid, decimal, empty, or duplicate guesses show a clear feedback banner **without consuming attempts**.
+4. **Dynamic Range Visualisation**:
+   - After each guess, the game visually narrows down the candidate pool on an active range track:
+     - "Too low!" shifts the minimum bound higher.
+     - "Too high!" shifts the maximum bound lower.
+   - A live candidate count displays the exact remaining possibilities.
+5. **Win & Loss Screens**:
+   - **Win**: Guessing the secret number within 7 attempts wins the round. Displays the secret number, guesses used, remaining attempts, and personal record status.
+   - **Loss**: Exhausting all 7 attempts triggers game over and reveals the secret number.
+   - Both screens provide **Play Again** and **Return to Arcade** actions.
+
+### Anonymous Statistics Tracked
+- **Total Games Played & Won**
+- **Win Percentage** (e.g. 75.0%)
+- **Average Guesses per Win**
+- **Best Score** (fewest guesses in a win)
+- **Current Win Streak & All-Time Best Win Streak**
+
+---
+
 ## 🆔 Anonymous Browser Records
 
 ArcadeStop requires **zero authentication or user accounts**:
-- On first visit to Reaction Rush, a unique UUID v4 is generated client-side and saved in `localStorage` under `arcadestop_reaction_rush_browser_id`.
-- On return visits, this identifier is reused to associate and retrieve the browser's personal best and session count.
+- On first visit, a unique UUID v4 is generated client-side and saved in `localStorage` under `arcadestop_reaction_rush_browser_id`.
+- This browser identifier is shared across all ArcadeStop mini-games to associate personal bests, session counts, and streak histories.
 - **Privacy-first**: No names, email addresses, IP addresses, or personal info are stored.
 - Gracefully handles disabled or corrupted `localStorage` by falling back to session-scoped UUIDs without interrupting gameplay.
 
@@ -62,15 +91,16 @@ ArcadeStop/
 │   ├── src/
 │   │   ├── components/           # UI Components (Navbar, Hero, GameCard, GameGrid, Footer, etc.)
 │   │   ├── games/
-│   │   │   └── ReactionRush/     # Reaction Rush Game (ReactionRushGame.jsx, ReactionRushGame.css, constants.js)
+│   │   │   ├── ReactionRush/     # Reaction Rush Game (ReactionRushGame.jsx, ReactionRushGame.css, constants.js)
+│   │   │   └── NumberNinja/      # Number Ninja Game (NumberNinjaGame.jsx, NumberNinjaGame.css, constants.js)
 │   │   ├── pages/                # Pages (Home, Arcade, GamePage, Records)
-│   │   ├── services/             # API Clients (api.js, gameService.js, reactionRushService.js)
+│   │   ├── services/             # API Clients (api.js, gameService.js, reactionRushService.js, numberNinjaService.js)
 │   │   ├── utils/                # Utility modules (browserId.js)
 │   │   ├── hooks/                # Custom React Hooks (useGames.js)
 │   │   ├── styles/               # Global & Component CSS
 │   │   ├── App.jsx               # Root Route & Toast Manager
 │   │   └── main.jsx              # Vite Entrypoint
-│   ├── tests/                    # Node test runner suite (reactionRush.test.js)
+│   ├── tests/                    # Node test runner suite (reactionRush.test.js, numberNinja.test.js)
 │   ├── public/                   # Static Assets (favicon.svg)
 │   ├── .env.example              # Frontend environment template
 │   ├── package.json              # Frontend dependencies and test script
@@ -80,19 +110,19 @@ ArcadeStop/
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/com/arcadestop/
-│   │   │   │   ├── controller/   # REST Controllers (GameController, HealthController, ReactionRushController)
-│   │   │   │   ├── service/      # Business Logic (GameService, ReactionRushService)
-│   │   │   │   ├── repository/   # Spring Data JPA (GameRepository, ReactionRushRecordRepository)
-│   │   │   │   ├── entity/       # JPA Entities (Game, GameStatus, ReactionRushRecord)
-│   │   │   │   ├── dto/          # DTOs (ReactionRushRecordDto, ReactionRushSessionRequestDto, etc.)
-│   │   │   │   ├── config/       # CORS & Startup Data Seed (CorsConfig, DataInitializer)
+│   │   │   │   ├── controller/   # REST Controllers (GameController, ReactionRushController, NumberNinjaController, HealthController)
+│   │   │   │   ├── service/      # Business Logic (GameService, ReactionRushService, NumberNinjaService)
+│   │   │   │   ├── repository/   # Spring Data JPA (GameRepository, ReactionRushRecordRepository, NumberNinjaRecordRepository)
+│   │   │   │   ├── entity/       # JPA Entities (Game, GameStatus, ReactionRushRecord, NumberNinjaRecord)
+│   │   │   │   ├── dto/          # DTOs (Request/Response DTOs for catalogue, Reaction Rush, and Number Ninja)
+│   │   │   │   ├── config/       # Startup Data Seed & Sync (DataInitializer, CorsConfig)
 │   │   │   │   ├── exception/    # Error Handling (GlobalExceptionHandler, ResourceNotFoundException)
 │   │   │   │   └── ArcadeStopApplication.java
 │   │   │   └── resources/
 │   │   │       ├── application.properties         # PostgreSQL Production/Default config
 │   │   │       └── application-local.properties   # Local standalone fallback config
 │   │   └── test/
-│   │       ├── java/com/arcadestop/               # Automated Tests (Controller, Service, Context)
+│   │       ├── java/com/arcadestop/               # Automated Tests (Controller, Service, Context, Config)
 │   │       └── resources/
 │   │           └── application-test.properties    # Isolated Test Profile (H2 PostgreSQL Mode)
 │   ├── .env.example              # Backend environment template
@@ -120,7 +150,7 @@ ArcadeStop/
 - **Vite 6**
 - **React Router DOM 7**
 - **Lucide React** (Indie arcade iconography)
-- **Plain CSS** (Custom properties design system, `#101014`, `#181820`, `#20202B`, `#A78BFA`, `#60A5FA`, `#F5F3FF`, `#A1A1B5`)
+- **Plain CSS** (Custom properties design system, `#101014`, `#181820`, `#20202B`, `#A78BFA`, `#60A5FA`, `#34D399`, `#F472B6`, `#F5F3FF`, `#A1A1B5`)
 
 ### Database
 - **PostgreSQL** (`arcadestop`)
@@ -145,39 +175,53 @@ All endpoints are hosted under `/api` with CORS enabled for `http://localhost:51
 | `GET` | `/api/reaction-rush/records/{browserId}` | Retrieve previous personal record for browser ID | `200 OK`, `404 Not Found` |
 | `POST` | `/api/reaction-rush/records/{browserId}` | Submit 5 reaction times from completed session | `200 OK`, `400 Bad Request` |
 
-#### POST Request Body:
+### Number Ninja Endpoints
+| Method | Endpoint | Description | Status Codes |
+|---|---|---|---|
+| `GET` | `/api/number-ninja/records/{browserId}` | Retrieve previous personal stats for browser ID | `200 OK`, `404 Not Found` |
+| `POST` | `/api/number-ninja/records/{browserId}` | Submit a completed session (idempotent via sessionId) | `200 OK`, `400 Bad Request` |
+
+#### Number Ninja POST Request Body:
 ```json
 {
-  "reactionTimes": [220, 245, 198, 230, 215]
+  "sessionId": "nn-987e6543-e21b-12d3-a456-426614174000",
+  "won": true,
+  "guessesUsed": 4
 }
 ```
 
-#### POST / GET Response DTO:
+#### Number Ninja POST / GET Response DTO:
 ```json
 {
   "id": 1,
   "browserId": "123e4567-e89b-12d3-a456-426614174000",
-  "bestReactionMs": 198,
-  "averageReactionMs": 222,
-  "totalSessions": 1,
-  "updatedAt": "2026-11-07T20:50:00",
+  "totalGamesPlayed": 5,
+  "totalGamesWon": 4,
+  "totalGuessesInWins": 16,
+  "bestGuesses": 3,
+  "currentWinStreak": 2,
+  "bestWinStreak": 3,
+  "winPercentage": 80.0,
+  "averageGuessesPerWin": 4.0,
+  "updatedAt": "2026-11-08T00:20:00",
   "newPersonalBest": true
 }
 ```
 
-#### Backend Validation Rules:
-- Exactly 5 reaction times required.
-- Each value must be an integer between 1 and 5,000 ms.
-- Best reaction time and rolling average are calculated server-side; client calculations are not trusted.
-- `totalSessions` is incremented only after valid session acceptance.
-- Safe against concurrent requests via database unique constraints on `browser_id`.
+#### Backend Validation & Idempotency Rules:
+- `guessesUsed` must be between 1 and 7.
+- A winning session must have between 1 and 7 guesses.
+- A lost session must have exactly 7 guesses.
+- All statistics (percentages, averages, streaks, best score) are computed strictly on the backend.
+- Duplicate submissions with the same `sessionId` return the current record idempotently without incrementing totals.
 
 ---
 
-## 🗄️ Database Changes (Phase 2)
+## 🗄️ Database Changes
 
-Hibernate `update` mode (`spring.jpa.hibernate.ddl-auto=update`) automatically creates the `reaction_rush_records` table:
+Hibernate `update` mode (`spring.jpa.hibernate.ddl-auto=update`) automatically creates the tables:
 
+### 1. Reaction Rush Records Table:
 ```sql
 CREATE TABLE reaction_rush_records (
     id BIGSERIAL PRIMARY KEY,
@@ -189,6 +233,29 @@ CREATE TABLE reaction_rush_records (
     CONSTRAINT uk_reaction_rush_browser_id UNIQUE (browser_id)
 );
 ```
+
+### 2. Number Ninja Records Table:
+```sql
+CREATE TABLE number_ninja_records (
+    id BIGSERIAL PRIMARY KEY,
+    browser_id VARCHAR(36) NOT NULL,
+    total_games_played INTEGER NOT NULL DEFAULT 0,
+    total_games_won INTEGER NOT NULL DEFAULT 0,
+    total_guesses_in_wins INTEGER NOT NULL DEFAULT 0,
+    best_guesses INTEGER,
+    current_win_streak INTEGER NOT NULL DEFAULT 0,
+    best_win_streak INTEGER NOT NULL DEFAULT 0,
+    last_session_id VARCHAR(64),
+    updated_at TIMESTAMP NOT NULL,
+    CONSTRAINT uk_number_ninja_browser_id UNIQUE (browser_id)
+);
+```
+
+### 3. Idempotent Data Initializer:
+`DataInitializer` synchronizes catalogue records on startup:
+- Fresh databases seed both **Reaction Rush** and **Number Ninja** as `AVAILABLE`.
+- Existing databases update **Number Ninja** to `AVAILABLE` without altering other fields or resetting custom data.
+- The remaining 4 games (**Memory Madness**, **TypeStorm**, **Sequence Master**, **Whack Attack**) remain `COMING_SOON`.
 
 ---
 
@@ -243,8 +310,17 @@ cd backend
 ./mvnw test
 ```
 **Results:**
-- **29 / 29 tests passed (0 failures, 0 errors, 0 skipped)**
-- Includes `ArcadeStopApplicationTests`, `GameServiceTest`, `GameControllerTest`, `ReactionRushServiceTest`, `ReactionRushControllerTest`.
+- **46 / 46 tests passed (0 failures, 0 errors, 0 skipped)**
+- Tests include:
+  - `ArcadeStopApplicationTests` (1 test)
+  - `DataInitializerTest` (2 tests: fresh DB seeding & existing record status sync)
+  - `GameServiceTest` (4 tests)
+  - `GameControllerTest` (5 tests)
+  - `DotenvEnvironmentPostProcessorTest` (3 tests)
+  - `ReactionRushServiceTest` (9 tests)
+  - `ReactionRushControllerTest` (7 tests)
+  - `NumberNinjaServiceTest` (9 tests)
+  - `NumberNinjaControllerTest` (6 tests)
 
 ### Frontend Tests
 Run the Node native test suite:
@@ -253,12 +329,16 @@ cd frontend
 npm test
 ```
 **Results:**
-- **11 / 11 tests passed (0 failures, 0 errors, 0 skipped)**
-- Tests cover UUID v4 generation, localStorage persistence & error fallback, API service (GET 404 handling, POST payload verification, 500 error propagation), 7 game state transitions, false start handling, 5-attempt session completion, duplicate-click protection, and timer cleanup.
+- **21 / 21 tests passed across 6 test suites (0 failures, 0 errors, 0 skipped)**
+- Tests cover:
+  - Anonymous browser identity generation, persistence, and corruption fallback.
+  - API client error handling and DTO serialization for both games.
+  - Reaction Rush 7-state machine, false start timing, and duplicate protection.
+  - Number Ninja RNG distribution, invalid input rejection without attempt penalty, range narrowing logic, winning deduction, loss on 7 attempts, and idempotency.
 
 ### Production Build
 ```bash
 cd frontend
 npm run build
 ```
-Builds cleanly with zero errors.
+Builds cleanly with zero errors in ~2.1s.

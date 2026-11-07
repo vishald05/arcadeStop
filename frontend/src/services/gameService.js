@@ -27,10 +27,10 @@ const THEME_DECORATIONS = {
     accentSecondary: '#2DD4BF',
     cardGradient: 'linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(45, 212, 191, 0.04) 100%)',
     borderGlow: 'rgba(52, 211, 153, 0.3)',
-    badgeText: 'Coming Soon',
+    badgeText: 'Play Now',
     estimatedPlayTime: '1-2 mins',
     vibe: 'Deduction & Math',
-    comingSoonMessage: 'Number Ninja is on the roadmap! Sharpen your deduction tactics for this number puzzle.'
+    comingSoonMessage: 'Number Ninja is ready to test your deduction skills! Guess the secret number within 7 attempts.'
   },
   'type-storm': {
     accentColor: '#F472B6',

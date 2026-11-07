@@ -1,0 +1,635 @@
+/* =========================================================
+   Number Ninja — Game Styles
+   ========================================================= */
+
+.nn-game-page {
+  min-height: 100vh;
+}
+
+.nn-back-bar {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nn-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+  text-decoration: none;
+}
+
+.nn-back-link:hover {
+  color: var(--accent-primary);
+}
+
+.nn-game-wrapper {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 2rem 0 4rem 0;
+}
+
+/* Header */
+.nn-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.nn-game-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-md);
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: #34D399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nn-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.nn-subtitle {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.nn-attempts-badge {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.nn-attempts-label {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.1rem;
+}
+
+.nn-attempts-count {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #34D399;
+}
+
+.nn-attempts-total {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-left: 0.1rem;
+}
+
+/* Arena Card */
+.nn-arena {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  min-height: 380px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+}
+
+/* ── IDLE State ── */
+.nn-state-idle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.nn-idle-icon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.15) 0%, rgba(96, 165, 250, 0.1) 100%);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  color: #34D399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float-icon 4s ease-in-out infinite;
+}
+
+.nn-state-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.nn-instructions {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.nn-rules-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+  width: 100%;
+}
+
+.nn-rules-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.nn-rule-icon {
+  color: #34D399;
+  font-weight: bold;
+}
+
+.nn-prev-best {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+}
+
+.nn-prev-best strong {
+  color: #34D399;
+}
+
+.nn-start-btn {
+  padding: 0.9rem 2.5rem;
+  font-size: 1rem;
+}
+
+/* ── PLAYING State ── */
+.nn-state-playing {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+/* Range Visualisation Component */
+.nn-range-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nn-range-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nn-range-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nn-range-span {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #34D399;
+}
+
+.nn-range-track {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-full);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nn-range-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #34D399 0%, #60A5FA 100%);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nn-range-scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.nn-range-active-bounds {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.nn-bound-min {
+  color: #60A5FA;
+}
+
+.nn-bound-max {
+  color: #F472B6;
+}
+
+/* Guess Form */
+.nn-guess-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nn-input-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.nn-number-input {
+  flex: 1;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.nn-number-input:focus {
+  border-color: #34D399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
+}
+
+.nn-number-input::placeholder {
+  color: rgba(161, 161, 181, 0.35);
+  font-weight: 400;
+  font-size: 1.125rem;
+}
+
+.nn-guess-btn {
+  padding: 0 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: #34D399;
+  color: #101014;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+}
+
+.nn-guess-btn:hover:not(:disabled) {
+  background: #2dd4bf;
+  transform: translateY(-1px);
+}
+
+.nn-guess-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.nn-feedback-banner {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  animation: fade-in 0.2s ease;
+}
+
+.nn-feedback--error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.nn-feedback--low {
+  background: rgba(96, 165, 250, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  color: #60A5FA;
+}
+
+.nn-feedback--high {
+  background: rgba(244, 114, 182, 0.12);
+  border: 1px solid rgba(244, 114, 182, 0.3);
+  color: #F472B6;
+}
+
+/* History */
+.nn-history-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nn-history-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nn-history-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nn-history-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.nn-history-pill--low {
+  border-color: rgba(96, 165, 250, 0.3);
+  color: #60A5FA;
+}
+
+.nn-history-pill--high {
+  border-color: rgba(244, 114, 182, 0.3);
+  color: #F472B6;
+}
+
+/* ── Completion Screens (WON & LOST) ── */
+.nn-state-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.nn-complete-icon-box {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nn-complete-icon--won {
+  background: rgba(52, 211, 153, 0.15);
+  border: 2px solid #34D399;
+  color: #34D399;
+  animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nn-complete-icon--lost {
+  background: rgba(239, 68, 68, 0.12);
+  border: 2px solid #ef4444;
+  color: #ef4444;
+}
+
+.nn-complete-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.nn-complete-title--won {
+  color: #34D399;
+}
+
+.nn-complete-title--lost {
+  color: #ef4444;
+}
+
+.nn-secret-reveal {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.nn-secret-number {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #FBBF24;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  padding: 0.2rem 0.8rem;
+  border-radius: var(--radius-md);
+}
+
+.nn-new-pb-badge {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: rgba(251, 191, 36, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-full);
+}
+
+/* Stats grid */
+.nn-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.nn-stat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nn-stat-label {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nn-stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.nn-stat-card--highlight .nn-stat-val {
+  color: #34D399;
+}
+
+/* Record status */
+.nn-record-status {
+  font-size: 0.8125rem;
+  min-height: 1.5rem;
+}
+
+.nn-saving {
+  color: var(--text-muted);
+}
+
+.nn-saved {
+  color: #34D399;
+  font-weight: 500;
+}
+
+.nn-save-error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ef4444;
+  font-size: 0.8125rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nn-retry-save-btn {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  border: 1px solid #ef4444;
+  background: transparent;
+  color: #ef4444;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Actions */
+.nn-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Attempt pips */
+.nn-pips {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.nn-pip {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg-card-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all var(--transition-normal);
+}
+
+.nn-pip--used {
+  background: #34D399;
+  border-color: #34D399;
+}
+
+.nn-pip--current {
+  background: rgba(52, 211, 153, 0.3);
+  border-color: #34D399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+}
+
+@keyframes bounce-in {
+  from { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+  to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .nn-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nn-arena {
+    padding: 1.25rem;
+  }
+
+  .nn-input-row {
+    flex-direction: column;
+  }
+
+  .nn-guess-btn {
+    padding: 0.85rem;
+    justify-content: center;
+  }
+}
