@@ -1,0 +1,13 @@
+export const TOTAL_ATTEMPTS = 5;
+export const MIN_DELAY = 2000;
+export const MAX_DELAY = 5000;
+
+export const STATES = {
+  IDLE: 'IDLE',
+  COUNTDOWN: 'COUNTDOWN',
+  READY: 'READY',
+  GO: 'GO',
+  FALSE_START: 'FALSE_START',
+  ATTEMPT_RESULT: 'ATTEMPT_RESULT',
+  SESSION_RESULT: 'SESSION_RESULT',
+};

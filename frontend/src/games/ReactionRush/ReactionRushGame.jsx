@@ -3,20 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Zap, RefreshCw, Trophy } from 'lucide-react';
 import { getBrowserId } from '../../utils/browserId';
 import { getRecord, submitSession } from '../../services/reactionRushService';
+import { TOTAL_ATTEMPTS, MIN_DELAY, MAX_DELAY, STATES } from './constants';
 import './ReactionRushGame.css';
 
-const TOTAL_ATTEMPTS = 5;
-const MIN_DELAY = 2000;
-const MAX_DELAY = 5000;
-
-const STATES = {
-  IDLE: 'IDLE',
-  COUNTDOWN: 'COUNTDOWN',
-  GO: 'GO',
-  FALSE_START: 'FALSE_START',
-  ATTEMPT_RESULT: 'ATTEMPT_RESULT',
-  SESSION_RESULT: 'SESSION_RESULT',
-};
+export { STATES };
 
 function getRandomDelay() {
   return Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY + 1)) + MIN_DELAY;
@@ -72,24 +62,38 @@ export default function ReactionRushGame({ game }) {
     };
   }, []);
 
-  const startCountdown = useCallback((currentSuccessCount, currentTimes) => {
+  const startCountdown = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
     inputHandledRef.current = false;
     transitionTo(STATES.COUNTDOWN);
 
     const delay = getRandomDelay();
+    // Phase 1: COUNTDOWN (~500ms initial prep)
+    // Phase 2: READY (waiting for signal; screen communicates player must wait)
+    const countdownDuration = Math.min(500, Math.floor(delay / 4));
+
     timerRef.current = setTimeout(() => {
-      // Only proceed if we're still in COUNTDOWN
       if (stateRef.current !== STATES.COUNTDOWN) return;
-      goTimestampRef.current = performance.now();
-      inputHandledRef.current = false;
-      transitionTo(STATES.GO);
-    }, delay);
+      transitionTo(STATES.READY);
+
+      timerRef.current = setTimeout(() => {
+        if (stateRef.current !== STATES.READY && stateRef.current !== STATES.COUNTDOWN) return;
+        goTimestampRef.current = (typeof performance !== 'undefined' && performance.now)
+          ? performance.now()
+          : Date.now();
+        inputHandledRef.current = false;
+        transitionTo(STATES.GO);
+      }, delay - countdownDuration);
+    }, countdownDuration);
   }, [transitionTo]);
 
   const handleInput = useCallback(() => {
     const currentState = stateRef.current;
 
-    if (currentState === STATES.COUNTDOWN) {
+    if (currentState === STATES.COUNTDOWN || currentState === STATES.READY) {
       // False start
       if (timerRef.current) {
         clearTimeout(timerRef.current);
@@ -104,7 +108,10 @@ export default function ReactionRushGame({ game }) {
       if (inputHandledRef.current) return; // prevent double input
       inputHandledRef.current = true;
 
-      const reactionMs = Math.round(performance.now() - goTimestampRef.current);
+      const now = (typeof performance !== 'undefined' && performance.now)
+        ? performance.now()
+        : Date.now();
+      const reactionMs = Math.round(now - goTimestampRef.current);
       setLastReactionTime(reactionMs);
 
       // Update refs and state atomically — ref must be updated before state
@@ -130,16 +137,25 @@ export default function ReactionRushGame({ game }) {
   useEffect(() => {
     const onKeyDown = (e) => {
       // Ignore if focused on interactive element
-      const tag = document.activeElement?.tagName?.toLowerCase();
-      if (['input', 'textarea', 'select'].includes(tag)) return;
+      const target = e.target;
+      const tag = target?.tagName?.toLowerCase();
+      if (['input', 'textarea', 'select'].includes(tag) || target?.isContentEditable) {
+        return;
+      }
 
-      if (e.key === ' ') {
-        e.preventDefault(); // prevent scroll
+      const state = stateRef.current;
+      const isGameInputState = (
+        state === STATES.COUNTDOWN ||
+        state === STATES.READY ||
+        state === STATES.GO
+      );
+
+      if (e.key === ' ' && isGameInputState) {
+        e.preventDefault(); // prevent scroll only when used as game input
       }
 
       if (e.key === ' ' || e.key === 'Enter') {
-        const state = stateRef.current;
-        if (state === STATES.COUNTDOWN || state === STATES.GO) {
+        if (isGameInputState) {
           handleInput();
         }
       }
@@ -263,12 +279,22 @@ export default function ReactionRushGame({ game }) {
           <div
             className={`rr-arena rr-arena--${gameState.toLowerCase()}`}
             onClick={() => {
-              if (gameState === STATES.COUNTDOWN || gameState === STATES.GO) {
+              if (
+                gameState === STATES.COUNTDOWN ||
+                gameState === STATES.READY ||
+                gameState === STATES.GO
+              ) {
                 handleInput();
               }
             }}
             role="button"
-            tabIndex={gameState === STATES.COUNTDOWN || gameState === STATES.GO ? 0 : -1}
+            tabIndex={
+              gameState === STATES.COUNTDOWN ||
+              gameState === STATES.READY ||
+              gameState === STATES.GO
+                ? 0
+                : -1
+            }
             aria-label={gameState === STATES.GO ? 'Click to register reaction' : undefined}
           >
             {/* IDLE */}
@@ -277,7 +303,7 @@ export default function ReactionRushGame({ game }) {
                 <div className="rr-idle-icon"><Zap size={48} /></div>
                 <h2 className="rr-state-title">Ready to Rush?</h2>
                 <div className="rr-instructions">
-                  <p>Wait for the <strong style={{ color: '#4ade80' }}>green signal</strong>, then click or press <kbd>Space</kbd> / <kbd>Enter</kbd> as fast as you can.</p>
+                  <p>Wait for the <strong>green signal</strong>, then click or press <kbd>Space</kbd> / <kbd>Enter</kbd> as fast as you can.</p>
                   <ul className="rr-rules-list">
                     <li><span className="rr-rule-icon rr-rule-warn">⚠</span> Clicking before the signal = false start</li>
                     <li><span className="rr-rule-icon rr-rule-ok">✓</span> 5 successful attempts = one session</li>
@@ -305,6 +331,15 @@ export default function ReactionRushGame({ game }) {
               <div className="rr-state-countdown">
                 <div className="rr-countdown-pulse" aria-hidden="true" />
                 <p className="rr-countdown-label">Get ready...</p>
+                <p className="rr-countdown-hint">Wait for green — don&apos;t click yet!</p>
+              </div>
+            )}
+
+            {/* READY */}
+            {gameState === STATES.READY && (
+              <div className="rr-state-countdown rr-state-ready">
+                <div className="rr-countdown-pulse" aria-hidden="true" />
+                <p className="rr-countdown-label">Waiting for signal...</p>
                 <p className="rr-countdown-hint">Wait for green — don&apos;t click yet!</p>
               </div>
             )}
