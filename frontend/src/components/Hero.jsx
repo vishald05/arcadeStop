@@ -48,8 +48,8 @@ export default function Hero({ onNotify, games = [] }) {
           {/* Left Column: Hero Content */}
           <div className="hero-content">
             <div className="hero-pill">
-              <span className="hero-pill-badge">Phase 1.5</span>
-              <span>Spring Boot Integration</span>
+              <span className="hero-pill-badge">Phase 2</span>
+              <span>Reaction Rush Live</span>
             </div>
 
             <h1 id="hero-heading" className="hero-title">

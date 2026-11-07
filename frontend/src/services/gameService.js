@@ -91,7 +91,7 @@ export function formatGame(game) {
     accentSecondary: theme.accentSecondary,
     cardGradient: theme.cardGradient,
     borderGlow: theme.borderGlow,
-    badgeText: game.featured ? 'First Up' : theme.badgeText,
+    badgeText: game.status === 'AVAILABLE' ? (theme.badgeText || 'Play Now') : (game.featured ? 'First Up' : theme.badgeText),
     estimatedPlayTime: theme.estimatedPlayTime,
     vibe: theme.vibe,
     comingSoonMessage: theme.comingSoonMessage,
