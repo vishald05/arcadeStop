@@ -1,0 +1,538 @@
+/* TypeStorm Arcade Styles */
+
+.typestorm-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header & Breadcrumb */
+.typestorm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.typestorm-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.typestorm-back-btn:hover {
+  color: var(--text-primary);
+}
+
+.typestorm-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.typestorm-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  background: rgba(244, 114, 182, 0.15);
+  color: #F472B6;
+  border: 1px solid rgba(244, 114, 182, 0.3);
+}
+
+.typestorm-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Mode / Duration Selector Chips */
+.typestorm-modes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 0.375rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.typestorm-mode-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.typestorm-mode-btn:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.typestorm-mode-btn.active {
+  background: rgba(244, 114, 182, 0.2);
+  color: #F472B6;
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  box-shadow: 0 0 12px rgba(244, 114, 182, 0.2);
+}
+
+.typestorm-mode-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* HUD Live Stats Bar */
+.typestorm-hud {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .typestorm-hud {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.typestorm-hud-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: border-color 0.2s ease;
+}
+
+.typestorm-hud-card.urgent {
+  border-color: rgba(244, 63, 94, 0.6);
+  background: rgba(244, 63, 94, 0.1);
+  animation: pulse-urgent 1s infinite alternate;
+}
+
+@keyframes pulse-urgent {
+  from { box-shadow: 0 0 5px rgba(244, 63, 94, 0.2); }
+  to { box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
+}
+
+.typestorm-hud-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.typestorm-hud-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.typestorm-hud-value.highlight-wpm {
+  color: #F472B6;
+}
+
+.typestorm-hud-value.highlight-accuracy {
+  color: #34D399;
+}
+
+.typestorm-hud-value.highlight-timer {
+  color: #60A5FA;
+}
+
+.typestorm-hud-value.highlight-timer.urgent {
+  color: #F43F5E;
+}
+
+/* Typing Arena / Board */
+.typestorm-board {
+  position: relative;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 114, 182, 0.25);
+  border-radius: 1rem;
+  padding: 2rem 2.25rem;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: text;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(244, 114, 182, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.typestorm-board:focus-within {
+  border-color: rgba(244, 114, 182, 0.5);
+  box-shadow: 0 0 24px rgba(244, 114, 182, 0.15), inset 0 0 20px rgba(244, 114, 182, 0.05);
+}
+
+.typestorm-hidden-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: auto;
+  cursor: text;
+  resize: none;
+  font-size: 16px; /* Prevents auto-zoom on iOS */
+  z-index: 10;
+}
+
+/* Passage Text Display */
+.typestorm-passage {
+  font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+  font-size: 1.35rem;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  user-select: none;
+  word-break: break-word;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .typestorm-passage {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  .typestorm-board {
+    padding: 1.25rem 1.25rem;
+  }
+}
+
+/* Character Highlighting */
+.char-correct {
+  color: #34D399; /* Bright Emerald */
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.3);
+}
+
+.char-incorrect {
+  color: #FB7185; /* Vibrant Rose */
+  background: rgba(251, 113, 133, 0.25);
+  border-radius: 2px;
+  text-decoration: underline wavy #F43F5E;
+}
+
+.char-space-incorrect {
+  background: rgba(251, 113, 133, 0.3);
+  border-radius: 2px;
+  color: #FB7185;
+}
+
+.char-untouched {
+  color: #64748B; /* Muted Slate */
+  transition: color 0.1s ease;
+}
+
+.char-current {
+  position: relative;
+  color: var(--text-primary);
+  border-bottom: 2px solid #F472B6;
+  animation: blink-caret 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes blink-caret {
+  from { border-bottom-color: #F472B6; }
+  to { border-bottom-color: transparent; }
+}
+
+/* Board Footer Prompt */
+.typestorm-board-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.typestorm-prompt-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #F472B6;
+  font-weight: 500;
+}
+
+/* Start / Idle Screen */
+.typestorm-idle-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(244, 114, 182, 0.2);
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+.typestorm-hero-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.2) 0%, rgba(251, 113, 133, 0.05) 100%);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F472B6;
+  box-shadow: 0 0 24px rgba(244, 114, 182, 0.2);
+}
+
+.typestorm-intro-text {
+  max-width: 520px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.typestorm-start-btn {
+  padding: 0.875rem 2.25rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  border: none;
+  background: linear-gradient(135deg, #EC4899 0%, #F43F5E 100%);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+  transition: all 0.2s ease;
+}
+
+.typestorm-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(236, 72, 153, 0.6);
+}
+
+/* Personal Best Preview Card on Idle */
+.typestorm-pb-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.typestorm-pb-item strong {
+  color: #F472B6;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  margin-left: 0.25rem;
+}
+
+/* Results Screen */
+.typestorm-results-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(244, 114, 182, 0.3);
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 32px rgba(244, 114, 182, 0.1);
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.typestorm-results-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.typestorm-wpm-hero-val {
+  font-size: 4.5rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  line-height: 1;
+  background: linear-gradient(135deg, #F472B6 0%, #FB7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(244, 114, 182, 0.3));
+}
+
+.typestorm-wpm-hero-label {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.typestorm-tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  border: 1px solid;
+}
+
+.typestorm-eval-message {
+  max-width: 500px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.typestorm-pb-congrats {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  animation: bouncePB 0.5s ease;
+}
+
+@keyframes bouncePB {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Stats Breakdown Grid */
+.typestorm-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 680px;
+}
+
+@media (max-width: 640px) {
+  .typestorm-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.typestorm-stat-cell {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.typestorm-stat-cell-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.typestorm-stat-cell-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: var(--text-primary);
+}
+
+/* Actions Row */
+.typestorm-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.typestorm-play-again-btn {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  border: none;
+  background: linear-gradient(135deg, #EC4899 0%, #F43F5E 100%);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.35);
+  transition: all 0.2s ease;
+}
+
+.typestorm-play-again-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(236, 72, 153, 0.5);
+}
+
+.typestorm-arcade-btn {
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(30, 41, 59, 0.6);
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.typestorm-arcade-btn:hover {
+  color: var(--text-primary);
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+}
