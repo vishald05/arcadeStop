@@ -27,7 +27,7 @@ class DataInitializerTest {
     private DataInitializer dataInitializer;
 
     @Test
-    @DisplayName("Fresh database initialization seeds all 6 games with Reaction Rush and Number Ninja as AVAILABLE")
+    @DisplayName("Fresh database initialization seeds all 6 games with Reaction Rush, Number Ninja, and TypeStorm as AVAILABLE")
     void testFreshDatabaseInitialization() {
         when(gameRepository.findBySlug(anyString())).thenReturn(Optional.empty());
 
@@ -52,6 +52,13 @@ class DataInitializerTest {
                 .orElseThrow();
         assertThat(numberNinja.getStatus()).isEqualTo(GameStatus.AVAILABLE);
 
+        Game typeStorm = savedGames.stream()
+                .filter(g -> g.getSlug().equals("type-storm"))
+                .findFirst()
+                .orElseThrow();
+        assertThat(typeStorm.getStatus()).isEqualTo(GameStatus.AVAILABLE);
+        assertThat(typeStorm.getCategory()).isEqualTo("Typing");
+
         Game memoryMadness = savedGames.stream()
                 .filter(g -> g.getSlug().equals("memory-madness"))
                 .findFirst()
@@ -60,10 +67,10 @@ class DataInitializerTest {
     }
 
     @Test
-    @DisplayName("Existing database updates Number Ninja from COMING_SOON to AVAILABLE while keeping Reaction Rush AVAILABLE and other fields intact")
-    void testExistingDatabaseUpdatesNumberNinjaStatus() {
+    @DisplayName("Existing database updates TypeStorm from COMING_SOON/Skills to AVAILABLE/Typing while keeping other fields intact")
+    void testExistingDatabaseUpdatesTypeStormStatus() {
         Game existingReactionRush = new Game("Reaction Rush", "reaction-rush", "Test reflexes", "Reflex", "zap", GameStatus.AVAILABLE, true);
-        Game existingNumberNinja = new Game("Number Ninja", "number-ninja", "Guess number", "Puzzle", "hash", GameStatus.COMING_SOON, false);
+        Game existingNumberNinja = new Game("Number Ninja", "number-ninja", "Guess number", "Puzzle", "hash", GameStatus.AVAILABLE, false);
         Game existingMemoryMadness = new Game("Memory Madness", "memory-madness", "Memory game", "Brain", "brain", GameStatus.COMING_SOON, false);
         Game existingTypeStorm = new Game("TypeStorm", "type-storm", "Typing", "Skills", "keyboard", GameStatus.COMING_SOON, false);
         Game existingSequence = new Game("Sequence Master", "sequence-master", "Sequence", "Memory", "palette", GameStatus.COMING_SOON, false);
@@ -78,14 +85,14 @@ class DataInitializerTest {
 
         dataInitializer.run();
 
-        // Only Number Ninja has a status change (COMING_SOON -> AVAILABLE), so only 1 save should occur
-        verify(gameRepository, times(1)).save(existingNumberNinja);
-        assertThat(existingNumberNinja.getStatus()).isEqualTo(GameStatus.AVAILABLE);
-        assertThat(existingNumberNinja.getName()).isEqualTo("Number Ninja");
-        assertThat(existingNumberNinja.getDescription()).isEqualTo("Guess number");
+        // TypeStorm has status change (COMING_SOON -> AVAILABLE) and category change (Skills -> Typing), so it should be saved
+        verify(gameRepository, times(1)).save(existingTypeStorm);
+        assertThat(existingTypeStorm.getStatus()).isEqualTo(GameStatus.AVAILABLE);
+        assertThat(existingTypeStorm.getCategory()).isEqualTo("Typing");
+        assertThat(existingTypeStorm.getName()).isEqualTo("TypeStorm");
 
-        // Reaction Rush was already AVAILABLE, so it wasn't resaved
+        // Reaction Rush and Number Ninja were already AVAILABLE, so they were not resaved
         verify(gameRepository, never()).save(existingReactionRush);
-        assertThat(existingReactionRush.getStatus()).isEqualTo(GameStatus.AVAILABLE);
+        verify(gameRepository, never()).save(existingNumberNinja);
     }
 }

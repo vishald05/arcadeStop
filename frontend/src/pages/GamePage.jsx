@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactionRushGame from '../games/ReactionRush/ReactionRushGame';
 import NumberNinjaGame from '../games/NumberNinja/NumberNinjaGame';
+import TypeStormGame from '../games/TypeStorm/TypeStormGame';
 import { ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
 
 export default function GamePage({ games, loading, error }) {
@@ -55,6 +56,10 @@ export default function GamePage({ games, loading, error }) {
 
   if (slug === 'number-ninja') {
     return <NumberNinjaGame game={game} />;
+  }
+
+  if (slug === 'type-storm') {
+    return <TypeStormGame game={game} />;
   }
 
   return (

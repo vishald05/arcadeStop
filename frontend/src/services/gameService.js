@@ -37,10 +37,10 @@ const THEME_DECORATIONS = {
     accentSecondary: '#FB7185',
     cardGradient: 'linear-gradient(135deg, rgba(244, 114, 182, 0.12) 0%, rgba(251, 113, 133, 0.04) 100%)',
     borderGlow: 'rgba(244, 114, 182, 0.3)',
-    badgeText: 'Coming Soon',
+    badgeText: 'Play Now',
     estimatedPlayTime: '1-2 mins',
     vibe: 'WPM & Accuracy',
-    comingSoonMessage: 'TypeStorm is warming up! Prepare your mechanical keyboard for high-speed word storms.'
+    comingSoonMessage: 'TypeStorm is ready to play! Test your typing speed, accuracy, and precision.'
   },
   'sequence-master': {
     accentColor: '#A78BFA',

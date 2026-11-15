@@ -11,7 +11,7 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig {
 
-    @Value("${cors.allowed-origins:http://localhost:5173}")
+    @Value("${cors.allowed-origins:http://localhost:5173,http://127.0.0.1:5173,http://192.168.1.6:5173}")
     private String allowedOrigins;
 
     @Bean
@@ -21,10 +21,11 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 String[] origins = Arrays.stream(allowedOrigins.split(","))
                         .map(String::trim)
+                        .filter(s -> !s.isEmpty())
                         .toArray(String[]::new);
 
                 registry.addMapping("/api/**")
-                        .allowedOrigins(origins)
+                        .allowedOriginPatterns(origins)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
                         .allowedHeaders("*")
                         .allowCredentials(false)

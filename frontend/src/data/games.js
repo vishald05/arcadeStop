@@ -56,18 +56,18 @@ export const GAMES = [
   {
     id: 'type-storm',
     title: 'TypeStorm',
-    category: 'Skills',
+    category: 'Typing',
     description: 'Test your typing speed, accuracy, and precision.',
     iconName: 'Keyboard',
-    status: 'coming_soon',
-    statusLabel: 'Coming Soon',
+    status: 'available',
+    statusLabel: 'Play Now',
     isFirstPlanned: false,
-    badgeText: 'Coming Soon',
+    badgeText: 'Play Now',
     accentColor: '#F472B6', // Pink
     accentSecondary: '#FB7185',
     cardGradient: 'linear-gradient(135deg, rgba(244, 114, 182, 0.12) 0%, rgba(251, 113, 133, 0.04) 100%)',
     borderGlow: 'rgba(244, 114, 182, 0.3)',
-    comingSoonMessage: 'TypeStorm is warming up! Prepare your mechanical keyboard for high-speed word storms.',
+    comingSoonMessage: 'TypeStorm is ready to play! Test your typing speed, accuracy, and precision.',
     estimatedPlayTime: '1-2 mins',
     vibe: 'WPM & Accuracy'
   },

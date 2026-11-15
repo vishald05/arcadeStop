@@ -57,9 +57,9 @@ public class DataInitializer implements CommandLineRunner {
                 "TypeStorm",
                 "type-storm",
                 "Test your typing speed, accuracy, and precision.",
-                "Skills",
+                "Typing",
                 "keyboard",
-                GameStatus.COMING_SOON,
+                GameStatus.AVAILABLE,
                 false
             ),
             new Game(
@@ -92,10 +92,20 @@ public class DataInitializer implements CommandLineRunner {
                 logger.info("Seeded game: {}", seedGame.getName());
             } else {
                 Game game = existing.get();
+                boolean modified = false;
                 if (game.getStatus() != seedGame.getStatus()) {
                     logger.info("Updating status for existing game '{}' from {} to {}",
                             game.getName(), game.getStatus(), seedGame.getStatus());
                     game.setStatus(seedGame.getStatus());
+                    modified = true;
+                }
+                if (seedGame.getCategory() != null && !seedGame.getCategory().equalsIgnoreCase(game.getCategory())) {
+                    logger.info("Updating category for existing game '{}' from {} to {}",
+                            game.getName(), game.getCategory(), seedGame.getCategory());
+                    game.setCategory(seedGame.getCategory());
+                    modified = true;
+                }
+                if (modified) {
                     gameRepository.save(game);
                     updatedCount++;
                 }
