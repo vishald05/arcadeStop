@@ -68,7 +68,7 @@ public class DataInitializer implements CommandLineRunner {
                 "Watch the sequence, remember the pattern, and repeat it correctly.",
                 "Memory",
                 "palette",
-                GameStatus.COMING_SOON,
+                GameStatus.AVAILABLE,
                 false
             ),
             new Game(
