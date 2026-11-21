@@ -57,10 +57,10 @@ const THEME_DECORATIONS = {
     accentSecondary: '#F87171',
     cardGradient: 'linear-gradient(135deg, rgba(251, 146, 60, 0.12) 0%, rgba(248, 113, 113, 0.04) 100%)',
     borderGlow: 'rgba(251, 146, 60, 0.3)',
-    badgeText: 'Coming Soon',
+    badgeText: 'Play Now',
     estimatedPlayTime: '1 min',
     vibe: 'Rapid Clicking',
-    comingSoonMessage: 'Whack Attack is coming soon! Get your clicking finger ready for rapid-fire whack-a-mole gameplay.'
+    comingSoonMessage: 'Whack Attack is ready to play! Strike targets before they vanish.'
   }
 };
 
