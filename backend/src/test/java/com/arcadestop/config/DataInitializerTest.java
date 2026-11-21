@@ -66,6 +66,13 @@ class DataInitializerTest {
         assertThat(whackAttack.getStatus()).isEqualTo(GameStatus.AVAILABLE);
         assertThat(whackAttack.getCategory()).isEqualTo("Reflex");
 
+        Game sequenceMaster = savedGames.stream()
+                .filter(g -> g.getSlug().equals("sequence-master"))
+                .findFirst()
+                .orElseThrow();
+        assertThat(sequenceMaster.getStatus()).isEqualTo(GameStatus.AVAILABLE);
+        assertThat(sequenceMaster.getCategory()).isEqualTo("Memory");
+
         Game memoryMadness = savedGames.stream()
                 .filter(g -> g.getSlug().equals("memory-madness"))
                 .findFirst()
@@ -92,12 +99,14 @@ class DataInitializerTest {
 
         dataInitializer.run();
 
-        // TypeStorm and Whack Attack have status change (COMING_SOON -> AVAILABLE), so both should be saved
+        // TypeStorm, Sequence Master, and Whack Attack have status change (COMING_SOON -> AVAILABLE), so they should be saved
         verify(gameRepository, times(1)).save(existingTypeStorm);
+        verify(gameRepository, times(1)).save(existingSequence);
         verify(gameRepository, times(1)).save(existingWhack);
         assertThat(existingTypeStorm.getStatus()).isEqualTo(GameStatus.AVAILABLE);
         assertThat(existingTypeStorm.getCategory()).isEqualTo("Typing");
         assertThat(existingTypeStorm.getName()).isEqualTo("TypeStorm");
+        assertThat(existingSequence.getStatus()).isEqualTo(GameStatus.AVAILABLE);
         assertThat(existingWhack.getStatus()).isEqualTo(GameStatus.AVAILABLE);
 
         // Reaction Rush and Number Ninja were already AVAILABLE, so they were not resaved

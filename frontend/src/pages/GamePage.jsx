@@ -4,6 +4,7 @@ import ReactionRushGame from '../games/ReactionRush/ReactionRushGame';
 import NumberNinjaGame from '../games/NumberNinja/NumberNinjaGame';
 import TypeStormGame from '../games/TypeStorm/TypeStormGame';
 import WhackAttackGame from '../games/WhackAttack/WhackAttackGame';
+import SequenceMasterGame from '../games/SequenceMaster/SequenceMasterGame';
 import { ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
 
 export default function GamePage({ games, loading, error }) {
@@ -65,6 +66,10 @@ export default function GamePage({ games, loading, error }) {
 
   if (slug === 'whack-attack') {
     return <WhackAttackGame game={game} />;
+  }
+
+  if (slug === 'sequence-master') {
+    return <SequenceMasterGame game={game} />;
   }
 
   return (

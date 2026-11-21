@@ -47,10 +47,10 @@ const THEME_DECORATIONS = {
     accentSecondary: '#C084FC',
     cardGradient: 'linear-gradient(135deg, rgba(167, 139, 250, 0.12) 0%, rgba(192, 132, 252, 0.04) 100%)',
     borderGlow: 'rgba(167, 139, 250, 0.3)',
-    badgeText: 'Coming Soon',
+    badgeText: 'Play Now',
     estimatedPlayTime: '2-4 mins',
     vibe: 'Patterns & Audio',
-    comingSoonMessage: 'Sequence Master is brewing! Keep your eyes on the pattern in this classic rhythm-memory test.'
+    comingSoonMessage: 'Sequence Master is ready to play! Watch the sequence and repeat the pattern.'
   },
   'whack-attack': {
     accentColor: '#FB923C',
