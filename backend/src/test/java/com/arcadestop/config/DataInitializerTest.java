@@ -77,7 +77,8 @@ class DataInitializerTest {
                 .filter(g -> g.getSlug().equals("memory-madness"))
                 .findFirst()
                 .orElseThrow();
-        assertThat(memoryMadness.getStatus()).isEqualTo(GameStatus.COMING_SOON);
+        assertThat(memoryMadness.getStatus()).isEqualTo(GameStatus.AVAILABLE);
+        assertThat(memoryMadness.getCategory()).isEqualTo("Memory");
     }
 
     @Test
@@ -99,15 +100,18 @@ class DataInitializerTest {
 
         dataInitializer.run();
 
-        // TypeStorm, Sequence Master, and Whack Attack have status change (COMING_SOON -> AVAILABLE), so they should be saved
+        // TypeStorm, Sequence Master, Whack Attack, and Memory Madness have status change (COMING_SOON -> AVAILABLE), so they should be saved
         verify(gameRepository, times(1)).save(existingTypeStorm);
         verify(gameRepository, times(1)).save(existingSequence);
         verify(gameRepository, times(1)).save(existingWhack);
+        verify(gameRepository, times(1)).save(existingMemoryMadness);
         assertThat(existingTypeStorm.getStatus()).isEqualTo(GameStatus.AVAILABLE);
         assertThat(existingTypeStorm.getCategory()).isEqualTo("Typing");
         assertThat(existingTypeStorm.getName()).isEqualTo("TypeStorm");
         assertThat(existingSequence.getStatus()).isEqualTo(GameStatus.AVAILABLE);
         assertThat(existingWhack.getStatus()).isEqualTo(GameStatus.AVAILABLE);
+        assertThat(existingMemoryMadness.getStatus()).isEqualTo(GameStatus.AVAILABLE);
+        assertThat(existingMemoryMadness.getCategory()).isEqualTo("Memory");
 
         // Reaction Rush and Number Ninja were already AVAILABLE, so they were not resaved
         verify(gameRepository, never()).save(existingReactionRush);

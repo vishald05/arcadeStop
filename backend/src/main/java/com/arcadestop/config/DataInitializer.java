@@ -39,9 +39,9 @@ public class DataInitializer implements CommandLineRunner {
                 "Memory Madness",
                 "memory-madness",
                 "Flip the cards, find matching pairs, and challenge your memory.",
-                "Brain",
+                "Memory",
                 "brain",
-                GameStatus.COMING_SOON,
+                GameStatus.AVAILABLE,
                 false
             ),
             new Game(

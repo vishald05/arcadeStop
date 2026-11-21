@@ -20,19 +20,19 @@ export const GAMES = [
   {
     id: 'memory-madness',
     title: 'Memory Madness',
-    category: 'Brain',
-    description: 'Flip the cards, find matching pairs, and challenge your memory.',
+    category: 'Memory',
+    description: 'Flip cards, remember positions, and match all pairs before time runs out.',
     iconName: 'Brain',
-    status: 'coming_soon',
-    statusLabel: 'Coming Soon',
+    status: 'available',
+    statusLabel: 'Play Now',
     isFirstPlanned: false,
-    badgeText: 'Coming Soon',
+    badgeText: 'Play Now',
     accentColor: '#60A5FA', // Sky blue
     accentSecondary: '#818CF8',
     cardGradient: 'linear-gradient(135deg, rgba(96, 165, 250, 0.12) 0%, rgba(129, 140, 248, 0.04) 100%)',
     borderGlow: 'rgba(96, 165, 250, 0.3)',
-    comingSoonMessage: 'Memory Madness is in the works! Get your brain ready for tile-flipping challenges.',
-    estimatedPlayTime: '2-3 mins',
+    comingSoonMessage: 'Memory Madness is ready to play! Flip cards, match pairs, and test your memory.',
+    estimatedPlayTime: '1-3 mins',
     vibe: 'Recall & Logic'
   },
   {

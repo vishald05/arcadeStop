@@ -1,0 +1,759 @@
+/* ── Memory Madness Styles ─────────────────────────────────────────── */
+
+.memmadness-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* ── Navigation & Audio Toggle ──────────────────────────────────────────── */
+
+.memmadness-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.memmadness-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.memmadness-back-btn:hover {
+  color: var(--text-primary);
+  transform: translateX(-2px);
+}
+
+.memmadness-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.memmadness-sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.memmadness-sound-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+.memmadness-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #60A5FA;
+  background-color: rgba(96, 165, 250, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  border-radius: 9999px;
+}
+
+/* ── Screen 1: Idle Setup Card ──────────────────────────────────────────── */
+
+.memmadness-idle-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg-card, #161823);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-xl, 1.25rem);
+  padding: 3rem 2rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.memmadness-idle-card::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.memmadness-hero-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 1.25rem;
+  color: #60A5FA;
+  background: rgba(96, 165, 250, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  box-shadow: 0 8px 24px rgba(96, 165, 250, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.memmadness-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary, #FFFFFF);
+  margin: 0 0 0.75rem 0;
+}
+
+.memmadness-subtitle {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #A0A5B5);
+  max-width: 520px;
+  margin: 0 0 2rem 0;
+}
+
+/* Mode Selection Cards */
+.memmadness-mode-selector {
+  width: 100%;
+  max-width: 620px;
+  margin-bottom: 2rem;
+}
+
+.memmadness-selector-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.memmadness-difficulty-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.875rem;
+  width: 100%;
+}
+
+.memmadness-diff-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: 0.875rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.memmadness-diff-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(96, 165, 250, 0.3);
+  transform: translateY(-2px);
+}
+
+.memmadness-diff-card.active {
+  background: rgba(96, 165, 250, 0.12);
+  border-color: #60A5FA;
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.25);
+  color: var(--text-primary);
+}
+
+.memmadness-diff-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.35rem;
+}
+
+.memmadness-diff-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.memmadness-diff-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 0.25rem;
+  color: var(--text-secondary);
+}
+
+.memmadness-diff-card.active .memmadness-diff-badge {
+  background: rgba(96, 165, 250, 0.25);
+  color: #93C5FD;
+}
+
+.memmadness-diff-desc {
+  font-size: 0.78125rem;
+  line-height: 1.4;
+  margin: 0 0 0.75rem 0;
+  flex-grow: 1;
+}
+
+.memmadness-diff-pb {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: #F59E0B;
+}
+
+/* Personal Best Strip */
+.memmadness-pb-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.625rem;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.memmadness-pb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.memmadness-pb-item strong {
+  color: var(--text-primary);
+}
+
+.memmadness-start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  padding: 0.95rem 2.25rem;
+  border-radius: 0.875rem;
+  box-shadow: 0 6px 20px rgba(96, 165, 250, 0.35);
+  margin-bottom: 2.25rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.memmadness-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(96, 165, 250, 0.45);
+}
+
+/* Rules Panel */
+.memmadness-rules-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 620px;
+  text-align: left;
+}
+
+.memmadness-rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.85rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 0.625rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.memmadness-rule-icon {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  color: #60A5FA;
+}
+
+/* ── Screen 2: Active Gameplay Board Screen ──────────────────────────────── */
+
+.memmadness-play-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-card, #161823);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-xl, 1.25rem);
+  padding: 1.75rem 1.5rem 2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+/* HUD */
+.memmadness-hud {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 580px;
+  margin-bottom: 1.5rem;
+}
+
+.memmadness-hud-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.35rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.65rem;
+}
+
+.memmadness-hud-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.memmadness-hud-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.memmadness-timer-val {
+  color: #60A5FA;
+}
+
+.memmadness-score-val {
+  color: #34D399;
+}
+
+/* Board Wrapper */
+.memmadness-board-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 560px;
+  margin-bottom: 1.5rem;
+}
+
+.memmadness-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), 1fr);
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0.85rem;
+  background: radial-gradient(circle at center, #1b1e2c 0%, #10121a 100%);
+  border: 2px solid rgba(96, 165, 250, 0.2);
+  border-radius: 1.5rem;
+  box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.7), 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.memmadness-grid-4 {
+  gap: 0.75rem;
+  padding: 1.125rem;
+}
+
+.memmadness-grid-6 {
+  gap: 0.5rem;
+  padding: 0.85rem;
+}
+
+.memmadness-grid-8 {
+  gap: 0.3rem;
+  padding: 0.55rem;
+}
+
+/* ── 3D Card Flip Elements ──────────────────────────────────────────────── */
+
+.memcard-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 900px;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.memcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0.75rem;
+}
+
+.memcard-wrapper.flipped .memcard-inner,
+.memcard-wrapper.matched .memcard-inner {
+  transform: rotateY(180deg);
+}
+
+.memcard-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: inherit;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Card Back (Face Down) */
+.memcard-back {
+  background: linear-gradient(135deg, #1f2338 0%, #111320 100%);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.35);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.memcard-wrapper:hover:not(.flipped):not(.matched) .memcard-back {
+  border-color: rgba(96, 165, 250, 0.4);
+  transform: scale(1.02);
+}
+
+.memcard-back-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.memmadness-grid-8 .memcard-back-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Card Front (Face Up / Revealed) */
+.memcard-front {
+  transform: rotateY(180deg);
+  background: #151724;
+  border: 2px solid var(--card-theme, #60A5FA);
+  box-shadow: 0 0 16px rgba(96, 165, 250, 0.25), inset 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+.memcard-symbol-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--card-theme, #60A5FA);
+  animation: symbol-pop 0.22s ease-out;
+}
+
+@keyframes symbol-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.memmadness-grid-4 .memcard-symbol-wrapper svg {
+  width: 38px;
+  height: 38px;
+}
+
+.memmadness-grid-6 .memcard-symbol-wrapper svg {
+  width: 24px;
+  height: 24px;
+}
+
+.memmadness-grid-8 .memcard-symbol-wrapper svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Matched State */
+.memcard-wrapper.matched .memcard-front {
+  border-color: #34D399;
+  background: radial-gradient(circle at center, rgba(52, 211, 153, 0.18) 0%, #12141f 100%);
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.35);
+  cursor: default;
+}
+
+.memcard-wrapper.matched .memcard-symbol-wrapper {
+  color: #34D399;
+}
+
+/* Mismatched State */
+.memcard-wrapper.mismatched .memcard-front {
+  border-color: #EF4444;
+  background: radial-gradient(circle at center, rgba(239, 68, 68, 0.18) 0%, #17111a 100%);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  animation: card-shake 0.4s ease-in-out;
+}
+
+@keyframes card-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+/* Footer & Controls */
+.memmadness-play-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 560px;
+}
+
+.memmadness-footer-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.memmadness-footer-stats strong {
+  color: var(--text-primary);
+}
+
+.memmadness-play-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.memmadness-small-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  padding: 0.45rem 0.95rem;
+}
+
+/* ── Screen 3: Game Completion Results ─────────────────────────────────── */
+
+.memmadness-results-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg-card, #161823);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-xl, 1.25rem);
+  padding: 3rem 2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.memmadness-pb-congrats {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 9999px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.memmadness-results-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.25rem;
+}
+
+.memmadness-results-hero-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.memmadness-results-hero-val {
+  font-size: 3.75rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #60A5FA;
+  text-shadow: 0 0 32px rgba(96, 165, 250, 0.35);
+  margin-bottom: 0.25rem;
+}
+
+.memmadness-results-hero-mode {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.memmadness-tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  border: 1px solid;
+  border-radius: 9999px;
+  margin-bottom: 0.75rem;
+}
+
+.memmadness-eval-message {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0;
+}
+
+/* Detailed Statistics Grid */
+.memmadness-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.875rem;
+  width: 100%;
+  max-width: 560px;
+  margin-bottom: 2.25rem;
+}
+
+.memmadness-stat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.875rem 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+}
+
+.memmadness-stat-cell-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.memmadness-stat-cell-value {
+  font-size: 1.375rem;
+  font-weight: 800;
+}
+
+/* Actions Row */
+.memmadness-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+}
+
+.memmadness-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
+/* ── Mobile Responsiveness ──────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .memmadness-container {
+    padding: 1rem 0.75rem 3rem;
+  }
+
+  .memmadness-title {
+    font-size: 1.85rem;
+  }
+
+  .memmadness-idle-card,
+  .memmadness-play-card,
+  .memmadness-results-card {
+    padding: 1.75rem 1rem;
+  }
+
+  .memmadness-difficulty-grid {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .memmadness-hud {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .memmadness-hud-cell:nth-child(4),
+  .memmadness-hud-cell:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  .memmadness-board-wrapper {
+    max-width: 360px;
+  }
+
+  .memmadness-grid-4 {
+    gap: 0.45rem;
+    padding: 0.55rem;
+  }
+
+  .memmadness-grid-6 {
+    gap: 0.3rem;
+    padding: 0.45rem;
+  }
+
+  .memmadness-grid-8 {
+    gap: 0.18rem;
+    padding: 0.35rem;
+  }
+
+  .memmadness-grid-8 .memcard-face {
+    border-radius: 0.35rem;
+  }
+
+  .memmadness-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+
+  .memmadness-results-hero-val {
+    font-size: 3rem;
+  }
+}

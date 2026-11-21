@@ -17,10 +17,10 @@ const THEME_DECORATIONS = {
     accentSecondary: '#818CF8',
     cardGradient: 'linear-gradient(135deg, rgba(96, 165, 250, 0.12) 0%, rgba(129, 140, 248, 0.04) 100%)',
     borderGlow: 'rgba(96, 165, 250, 0.3)',
-    badgeText: 'Coming Soon',
-    estimatedPlayTime: '2-3 mins',
+    badgeText: 'Play Now',
+    estimatedPlayTime: '1-3 mins',
     vibe: 'Recall & Logic',
-    comingSoonMessage: 'Memory Madness is in the works! Get your brain ready for tile-flipping challenges.'
+    comingSoonMessage: 'Memory Madness is ready to play! Flip cards, match pairs, and test your memory.'
   },
   'number-ninja': {
     accentColor: '#34D399',

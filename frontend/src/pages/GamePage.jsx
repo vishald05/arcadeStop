@@ -5,6 +5,7 @@ import NumberNinjaGame from '../games/NumberNinja/NumberNinjaGame';
 import TypeStormGame from '../games/TypeStorm/TypeStormGame';
 import WhackAttackGame from '../games/WhackAttack/WhackAttackGame';
 import SequenceMasterGame from '../games/SequenceMaster/SequenceMasterGame';
+import MemoryMadnessGame from '../games/MemoryMadness/MemoryMadnessGame';
 import { ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
 
 export default function GamePage({ games, loading, error }) {
@@ -70,6 +71,10 @@ export default function GamePage({ games, loading, error }) {
 
   if (slug === 'sequence-master') {
     return <SequenceMasterGame game={game} />;
+  }
+
+  if (slug === 'memory-madness') {
+    return <MemoryMadnessGame game={game} />;
   }
 
   return (
