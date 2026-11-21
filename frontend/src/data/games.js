@@ -95,15 +95,15 @@ export const GAMES = [
     category: 'Reflex',
     description: 'Targets appear randomly. Hit as many as possible before time runs out.',
     iconName: 'Target',
-    status: 'coming_soon',
-    statusLabel: 'Coming Soon',
+    status: 'available',
+    statusLabel: 'Play Now',
     isFirstPlanned: false,
-    badgeText: 'Coming Soon',
+    badgeText: 'Play Now',
     accentColor: '#FB923C', // Orange / Coral
     accentSecondary: '#F87171',
     cardGradient: 'linear-gradient(135deg, rgba(251, 146, 60, 0.12) 0%, rgba(248, 113, 113, 0.04) 100%)',
     borderGlow: 'rgba(251, 146, 60, 0.3)',
-    comingSoonMessage: 'Whack Attack is coming soon! Get your clicking finger ready for rapid-fire whack-a-mole gameplay.',
+    comingSoonMessage: 'Whack Attack is ready to play! Strike targets before they vanish.',
     estimatedPlayTime: '1 min',
     vibe: 'Rapid Clicking'
   }

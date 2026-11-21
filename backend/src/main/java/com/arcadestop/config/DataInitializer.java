@@ -77,7 +77,7 @@ public class DataInitializer implements CommandLineRunner {
                 "Targets appear randomly. Hit as many as possible before time runs out.",
                 "Reflex",
                 "target",
-                GameStatus.COMING_SOON,
+                GameStatus.AVAILABLE,
                 false
             )
         );
