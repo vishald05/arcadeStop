@@ -1,6 +1,8 @@
 package com.arcadestop.service;
 
+import com.arcadestop.dto.PagedResponseDto;
 import com.arcadestop.dto.WhackAttackRecordDto;
+import com.arcadestop.dto.WhackAttackSessionDto;
 import com.arcadestop.dto.WhackAttackSessionRequestDto;
 import com.arcadestop.entity.WhackAttackRecord;
 import com.arcadestop.entity.WhackAttackSession;
@@ -9,6 +11,10 @@ import com.arcadestop.repository.WhackAttackRecordRepository;
 import com.arcadestop.repository.WhackAttackSessionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -167,5 +173,29 @@ public class WhackAttackService {
             throw new IllegalArgumentException("Browser ID cannot be blank");
         }
         return sessionRepository.findByBrowserIdOrderByCreatedAtDesc(browserId.trim());
+    }
+
+    @Transactional(readOnly = true)
+    public PagedResponseDto<WhackAttackSessionDto> getSessionHistory(String browserId, int page, int size) {
+        if (browserId == null || browserId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Browser ID cannot be blank");
+        }
+        if (page < 0) {
+            throw new IllegalArgumentException("Page index cannot be negative");
+        }
+        if (size <= 0) {
+            throw new IllegalArgumentException("Page size must be greater than zero");
+        }
+        if (size > 50) {
+            throw new IllegalArgumentException("Page size cannot exceed 50");
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt", "id"));
+        Page<WhackAttackSession> sessionPage = sessionRepository.findByBrowserId(browserId.trim(), pageable);
+        List<WhackAttackSessionDto> dtos = sessionPage.getContent().stream()
+                .map(WhackAttackSessionDto::fromEntity)
+                .toList();
+
+        return PagedResponseDto.fromPage(sessionPage, dtos);
     }
 }

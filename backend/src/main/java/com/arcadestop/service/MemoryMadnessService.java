@@ -2,7 +2,9 @@ package com.arcadestop.service;
 
 import com.arcadestop.dto.MemoryMadnessOverviewDto;
 import com.arcadestop.dto.MemoryMadnessRecordDto;
+import com.arcadestop.dto.MemoryMadnessSessionDto;
 import com.arcadestop.dto.MemoryMadnessSessionRequestDto;
+import com.arcadestop.dto.PagedResponseDto;
 import com.arcadestop.entity.MemoryMadnessRecord;
 import com.arcadestop.entity.MemoryMadnessSession;
 import com.arcadestop.exception.ResourceNotFoundException;
@@ -10,6 +12,10 @@ import com.arcadestop.repository.MemoryMadnessRecordRepository;
 import com.arcadestop.repository.MemoryMadnessSessionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -184,5 +190,40 @@ public class MemoryMadnessService {
 
         MemoryMadnessRecord saved = recordRepository.save(record);
         return MemoryMadnessRecordDto.fromEntity(saved, isNewPersonalBest);
+    }
+
+    @Transactional(readOnly = true)
+    public PagedResponseDto<MemoryMadnessSessionDto> getSessionHistory(String browserId, String difficulty, int page, int size) {
+        if (browserId == null || browserId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Browser ID cannot be blank");
+        }
+        if (page < 0) {
+            throw new IllegalArgumentException("Page index cannot be negative");
+        }
+        if (size <= 0) {
+            throw new IllegalArgumentException("Page size must be greater than zero");
+        }
+        if (size > 50) {
+            throw new IllegalArgumentException("Page size cannot exceed 50");
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt", "id"));
+        Page<MemoryMadnessSession> sessionPage;
+
+        if (difficulty != null && !difficulty.trim().isEmpty()) {
+            String cleanDiff = difficulty.trim().toUpperCase();
+            if (!ALLOWED_DIFFICULTIES.contains(cleanDiff)) {
+                throw new IllegalArgumentException("Difficulty must be one of: EASY, MEDIUM, HARD");
+            }
+            sessionPage = sessionRepository.findByBrowserIdAndDifficulty(browserId.trim(), cleanDiff, pageable);
+        } else {
+            sessionPage = sessionRepository.findByBrowserId(browserId.trim(), pageable);
+        }
+
+        List<MemoryMadnessSessionDto> dtos = sessionPage.getContent().stream()
+                .map(MemoryMadnessSessionDto::fromEntity)
+                .toList();
+
+        return PagedResponseDto.fromPage(sessionPage, dtos);
     }
 }

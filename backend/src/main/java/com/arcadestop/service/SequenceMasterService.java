@@ -1,7 +1,9 @@
 package com.arcadestop.service;
 
+import com.arcadestop.dto.PagedResponseDto;
 import com.arcadestop.dto.SequenceMasterOverviewDto;
 import com.arcadestop.dto.SequenceMasterRecordDto;
+import com.arcadestop.dto.SequenceMasterSessionDto;
 import com.arcadestop.dto.SequenceMasterSessionRequestDto;
 import com.arcadestop.entity.SequenceMasterRecord;
 import com.arcadestop.entity.SequenceMasterSession;
@@ -10,6 +12,10 @@ import com.arcadestop.repository.SequenceMasterRecordRepository;
 import com.arcadestop.repository.SequenceMasterSessionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -174,5 +180,40 @@ public class SequenceMasterService {
 
         SequenceMasterRecord saved = recordRepository.save(record);
         return SequenceMasterRecordDto.fromEntity(saved, isNewPersonalBest);
+    }
+
+    @Transactional(readOnly = true)
+    public PagedResponseDto<SequenceMasterSessionDto> getSessionHistory(String browserId, String difficulty, int page, int size) {
+        if (browserId == null || browserId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Browser ID cannot be blank");
+        }
+        if (page < 0) {
+            throw new IllegalArgumentException("Page index cannot be negative");
+        }
+        if (size <= 0) {
+            throw new IllegalArgumentException("Page size must be greater than zero");
+        }
+        if (size > 50) {
+            throw new IllegalArgumentException("Page size cannot exceed 50");
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt", "id"));
+        Page<SequenceMasterSession> sessionPage;
+
+        if (difficulty != null && !difficulty.trim().isEmpty()) {
+            String cleanDiff = difficulty.trim().toUpperCase();
+            if (!ALLOWED_DIFFICULTIES.contains(cleanDiff)) {
+                throw new IllegalArgumentException("Difficulty must be one of: EASY, MEDIUM, HARD");
+            }
+            sessionPage = sessionRepository.findByBrowserIdAndDifficulty(browserId.trim(), cleanDiff, pageable);
+        } else {
+            sessionPage = sessionRepository.findByBrowserId(browserId.trim(), pageable);
+        }
+
+        List<SequenceMasterSessionDto> dtos = sessionPage.getContent().stream()
+                .map(SequenceMasterSessionDto::fromEntity)
+                .toList();
+
+        return PagedResponseDto.fromPage(sessionPage, dtos);
     }
 }

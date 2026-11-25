@@ -1,7 +1,9 @@
 package com.arcadestop.controller;
 
+import com.arcadestop.dto.PagedResponseDto;
 import com.arcadestop.dto.SequenceMasterOverviewDto;
 import com.arcadestop.dto.SequenceMasterRecordDto;
+import com.arcadestop.dto.SequenceMasterSessionDto;
 import com.arcadestop.dto.SequenceMasterSessionRequestDto;
 import com.arcadestop.service.SequenceMasterService;
 import jakarta.validation.Valid;
@@ -21,6 +23,15 @@ public class SequenceMasterController {
     @GetMapping("/records/{browserId}")
     public ResponseEntity<SequenceMasterOverviewDto> getOverview(@PathVariable String browserId) {
         return ResponseEntity.ok(sequenceMasterService.getOverview(browserId));
+    }
+
+    @GetMapping("/records/{browserId}/sessions")
+    public ResponseEntity<PagedResponseDto<SequenceMasterSessionDto>> getSessionHistory(
+            @PathVariable String browserId,
+            @RequestParam(required = false) String difficulty,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(sequenceMasterService.getSessionHistory(browserId, difficulty, page, size));
     }
 
     @GetMapping("/records/{browserId}/{difficulty}")

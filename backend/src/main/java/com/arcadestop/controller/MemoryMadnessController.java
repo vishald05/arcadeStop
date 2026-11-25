@@ -2,7 +2,9 @@ package com.arcadestop.controller;
 
 import com.arcadestop.dto.MemoryMadnessOverviewDto;
 import com.arcadestop.dto.MemoryMadnessRecordDto;
+import com.arcadestop.dto.MemoryMadnessSessionDto;
 import com.arcadestop.dto.MemoryMadnessSessionRequestDto;
+import com.arcadestop.dto.PagedResponseDto;
 import com.arcadestop.service.MemoryMadnessService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,15 @@ public class MemoryMadnessController {
     @GetMapping("/records/{browserId}")
     public ResponseEntity<MemoryMadnessOverviewDto> getOverview(@PathVariable String browserId) {
         return ResponseEntity.ok(memoryMadnessService.getOverview(browserId));
+    }
+
+    @GetMapping("/records/{browserId}/sessions")
+    public ResponseEntity<PagedResponseDto<MemoryMadnessSessionDto>> getSessionHistory(
+            @PathVariable String browserId,
+            @RequestParam(required = false) String difficulty,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(memoryMadnessService.getSessionHistory(browserId, difficulty, page, size));
     }
 
     @GetMapping("/records/{browserId}/{difficulty}")
