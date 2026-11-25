@@ -34,3 +34,18 @@ export async function submitSession(browserId, sessionData) {
     body: JSON.stringify(sessionData),
   });
 }
+
+/**
+ * Retrieve paginated session history for a browser ID in TypeStorm.
+ * @param {string} browserId
+ * @param {number} [page=0]
+ * @param {number} [size=10]
+ * @returns {Promise<object>} PagedResponseDto<TypeStormSessionDto>
+ */
+export async function getSessionHistory(browserId, page = 0, size = 10) {
+  const params = new URLSearchParams({
+    page: String(page),
+    size: String(size)
+  });
+  return await apiFetch(`/type-storm/records/${encodeURIComponent(browserId)}/sessions?${params.toString()}`);
+}

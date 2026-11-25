@@ -45,3 +45,22 @@ export async function submitSession(browserId, sessionData) {
     body: JSON.stringify(sessionData),
   });
 }
+
+/**
+ * Retrieve paginated session history for a browser ID in Memory Madness.
+ * @param {string} browserId
+ * @param {string} [difficulty] - Optional difficulty filter ('EASY', 'MEDIUM', 'HARD')
+ * @param {number} [page=0]
+ * @param {number} [size=10]
+ * @returns {Promise<object>} PagedResponseDto<MemoryMadnessSessionDto>
+ */
+export async function getSessionHistory(browserId, difficulty, page = 0, size = 10) {
+  const params = new URLSearchParams({
+    page: String(page),
+    size: String(size)
+  });
+  if (difficulty && typeof difficulty === 'string' && difficulty.trim()) {
+    params.set('difficulty', difficulty.trim().toUpperCase());
+  }
+  return await apiFetch(`/memory-madness/records/${encodeURIComponent(browserId)}/sessions?${params.toString()}`);
+}
