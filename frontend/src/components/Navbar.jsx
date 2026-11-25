@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Gamepad2, Menu, X, Trophy, Layers } from 'lucide-react';
+import { NavLink, Link } from 'react-router-dom';
+import { Gamepad2, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,21 +17,17 @@ export default function Navbar() {
     <header className="navbar-wrapper">
       <div className="app-container">
         <nav className="navbar" aria-label="Main Navigation">
-          {/* Logo & Branding */}
-          <NavLink to="/" className="nav-brand" onClick={closeMobileMenu}>
+          {/* Logo & Gaming Wordmark */}
+          <Link to="/" className="nav-brand" onClick={closeMobileMenu}>
             <div className="nav-logo-box">
-              <Gamepad2 size={22} strokeWidth={2.3} />
+              <Gamepad2 size={20} strokeWidth={2.4} />
             </div>
-            <div className="brand-text-group">
-              <span className="brand-name">Arcade<span>Stop</span></span>
-              <div className="brand-indicator">
-                <span className="indicator-dot"></span>
-                <span>System Ready</span>
-              </div>
-            </div>
-          </NavLink>
+            <span className="brand-name">
+              ARCADE<span className="brand-accent">STOP</span>
+            </span>
+          </Link>
 
-          {/* Desktop Links */}
+          {/* Desktop Navigation Links */}
           <div className="nav-links-desktop">
             <NavLink
               to="/"
@@ -50,8 +46,7 @@ export default function Navbar() {
               to="/records"
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             >
-              <span>My Records</span>
-              <span className="nav-records-tag">Soon</span>
+              Records
             </NavLink>
           </div>
 
@@ -68,7 +63,7 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Dropdown Menu */}
       <div className={`mobile-nav-menu ${mobileMenuOpen ? 'open' : ''}`}>
         <NavLink
           to="/"
@@ -76,22 +71,21 @@ export default function Navbar() {
           onClick={closeMobileMenu}
           end
         >
-          <span>Home</span>
+          Home
         </NavLink>
         <NavLink
           to="/arcade"
           className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
           onClick={closeMobileMenu}
         >
-          <span>Arcade Collection</span>
+          Arcade
         </NavLink>
         <NavLink
           to="/records"
           className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
           onClick={closeMobileMenu}
         >
-          <span>My Records</span>
-          <span className="nav-records-tag">Soon</span>
+          Records
         </NavLink>
       </div>
     </header>

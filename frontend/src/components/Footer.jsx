@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Gamepad2, ArrowUp, Sparkles } from 'lucide-react';
+import { Gamepad2, ArrowUp } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,62 +12,51 @@ export default function Footer() {
   return (
     <footer className="arcade-footer">
       <div className="app-container">
-        <div className="footer-top">
-          {/* Brand & Tagline Column */}
-          <div className="footer-brand-col">
+        <div className="footer-content">
+          {/* Brand & Wordmark */}
+          <div className="footer-brand">
             <Link to="/" className="nav-brand" onClick={scrollToTop}>
               <div className="nav-logo-box">
-                <Gamepad2 size={20} strokeWidth={2.3} />
+                <Gamepad2 size={18} strokeWidth={2.4} />
               </div>
-              <span className="brand-name">Arcade<span>Stop</span></span>
+              <span className="brand-name">
+                ARCADE<span className="brand-accent">STOP</span>
+              </span>
             </Link>
-            <p className="footer-tagline">
-              Your stop for one more game.
-            </p>
-            <p className="footer-playful-note">
-              "Made for people who always say one more round."
+            <p className="footer-description">
+              A little arcade for your competitive side.
             </p>
           </div>
 
           {/* Clean Navigation Links */}
-          <div className="footer-nav-col">
-            <div className="footer-nav-group">
-              <span className="footer-nav-heading">Platform</span>
-              <Link to="/" className="footer-link" onClick={scrollToTop}>Home</Link>
-              <Link to="/arcade" className="footer-link" onClick={scrollToTop}>Arcade Collection</Link>
-              <Link to="/records" className="footer-link" onClick={scrollToTop}>Personal Records</Link>
-            </div>
+          <nav className="footer-nav" aria-label="Footer Navigation">
+            <Link to="/" className="footer-nav-link" onClick={scrollToTop}>Home</Link>
+            <Link to="/arcade" className="footer-nav-link" onClick={scrollToTop}>Arcade</Link>
+            <Link to="/records" className="footer-nav-link" onClick={scrollToTop}>Records</Link>
+          </nav>
 
-            <div className="footer-nav-group">
-              <span className="footer-nav-heading">Collection</span>
-              <Link to="/arcade" className="footer-link" onClick={scrollToTop}>Reflex Games</Link>
-              <Link to="/arcade" className="footer-link" onClick={scrollToTop}>Brain & Logic</Link>
-              <Link to="/arcade" className="footer-link" onClick={scrollToTop}>Puzzles & Speed</Link>
-            </div>
+          {/* Back to Top */}
+          <div className="footer-actions">
+            <button
+              type="button"
+              className="btn btn-secondary back-to-top-btn"
+              onClick={scrollToTop}
+              aria-label="Back to top"
+            >
+              <span>TOP</span>
+              <ArrowUp size={14} />
+            </button>
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Dynamic Copyright */}
         <div className="footer-bottom">
-          <div className="footer-copy">
+          <p className="footer-copyright">
             © {currentYear} ArcadeStop. All rights reserved.
-          </div>
-
-          <div className="footer-pill-badge">
-            <Sparkles size={12} />
-            <span>Modern Indie Web Arcade</span>
-          </div>
-
-          <button 
-            type="button" 
-            className="btn btn-secondary" 
-            onClick={scrollToTop}
-            style={{ padding: '0.4rem 0.9rem', fontSize: '0.8rem' }}
-            aria-label="Back to top of page"
-          >
-            <span>Back to top</span>
-            <ArrowUp size={14} />
-          </button>
+          </p>
+          <p className="footer-tagline">
+            Built for quick breaks & high scores.
+          </p>
         </div>
       </div>
     </footer>

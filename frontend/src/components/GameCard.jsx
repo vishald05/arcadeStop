@@ -6,10 +6,10 @@ import {
   Keyboard, 
   Palette, 
   Target, 
-  ArrowRight, 
-  Clock, 
+  ArrowRight,
+  Clock,
   Sparkles,
-  Flame
+  Lock
 } from 'lucide-react';
 
 const ICON_MAP = {
@@ -31,6 +31,8 @@ export default function GameCard({ game, onSelect }) {
   const iconKey = (game.icon || game.iconName || '').toLowerCase();
   const IconComponent = ICON_MAP[iconKey] || ICON_MAP[game.iconName] || Sparkles;
 
+  const isAvailable = game.status === 'AVAILABLE';
+
   const handleClick = () => {
     if (onSelect) {
       onSelect(game);
@@ -39,7 +41,7 @@ export default function GameCard({ game, onSelect }) {
 
   return (
     <article 
-      className={`game-card game-card-${game.slug || game.id}`}
+      className={`game-card ${isAvailable ? 'card-available' : 'card-disabled'}`}
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -49,57 +51,27 @@ export default function GameCard({ game, onSelect }) {
           handleClick();
         }
       }}
-      aria-label={`${game.name || game.title}: ${game.statusLabel || game.status}`}
-      style={{
-        '--card-accent': game.accentColor,
-        '--card-glow': game.borderGlow
-      }}
+      aria-label={`${game.name || game.title}: ${isAvailable ? 'Available to Play' : 'Coming Soon'}`}
     >
-      {/* Dynamic ambient backdrop specific to each game's visual identity */}
-      <div 
-        className="card-ambient-backdrop" 
-        style={{ background: game.cardGradient }}
-        aria-hidden="true"
-      />
-
       <div className="game-card-body">
-        {/* Top Header Row with Icon and Badges */}
+        {/* Top Header Row with Icon and Category/Status Badges */}
         <div className="card-top-row">
-          <div 
-            className="game-icon-container"
-            style={{
-              color: game.accentColor,
-              borderColor: `${game.accentColor}33`,
-              boxShadow: `0 4px 16px ${game.accentColor}18`
-            }}
-          >
-            <IconComponent size={26} strokeWidth={2.2} />
+          <div className="game-icon-container">
+            <IconComponent size={24} strokeWidth={2.3} />
           </div>
 
           <div className="card-badges">
-            {game.isFirstPlanned || game.featured ? (
-              <span className="badge badge-first">
-                <Flame size={12} />
-                <span>{game.badgeText || 'First Up'}</span>
-              </span>
-            ) : (
-              <span className="badge badge-coming">
-                <span>{game.badgeText || 'Coming Soon'}</span>
-              </span>
-            )}
-            <span 
-              className="card-category-badge"
-              style={{
-                color: game.accentColor,
-                backgroundColor: `${game.accentColor}14`
-              }}
-            >
-              {game.category}
+            <span className="card-category-badge">
+              {game.category || 'Arcade'}
             </span>
+            <div className={`status-pill ${isAvailable ? 'status-live' : 'status-soon'}`}>
+              <span className="status-dot" />
+              <span>{isAvailable ? 'READY' : 'SOON'}</span>
+            </div>
           </div>
         </div>
 
-        {/* Title and Description */}
+        {/* Title and Short Description */}
         <h3 className="card-title">
           {game.name || game.title}
         </h3>
@@ -109,25 +81,25 @@ export default function GameCard({ game, onSelect }) {
         </p>
 
         {/* Thematic Meta Row */}
-        <div className="card-meta-chips">
-          <div className="meta-chip">
+        <div className="card-meta-row">
+          <div className="meta-item">
             <Clock size={12} />
             <span>{game.estimatedPlayTime || '1-2 mins'}</span>
           </div>
-          <span>•</span>
-          <div className="meta-chip">
-            <span>{game.vibe || 'Indie Arcade'}</span>
+          <span className="meta-divider">•</span>
+          <div className="meta-item">
+            <span>{game.vibe || 'Fast Action'}</span>
           </div>
         </div>
       </div>
 
       {/* Card Action Footer */}
       <div className="game-card-footer">
-        <span className="action-label">
-          {game.status === 'AVAILABLE' ? 'Play Game' : (game.isFirstPlanned || game.featured ? 'Available Soon' : 'Coming Soon')}
+        <span className="action-text">
+          {isAvailable ? 'PLAY GAME' : 'COMING SOON'}
         </span>
-        <div className="action-arrow-btn" aria-hidden="true">
-          <ArrowRight size={15} />
+        <div className="action-icon-box" aria-hidden="true">
+          {isAvailable ? <ArrowRight size={15} /> : <Lock size={13} />}
         </div>
       </div>
     </article>
