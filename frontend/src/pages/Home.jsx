@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
-import GameGrid from '../components/GameGrid';
-import InfoSection from '../components/InfoSection';
+import FeaturedGames from '../components/FeaturedGames';
+import ArcadeCTA from '../components/ArcadeCTA';
 
 export default function Home({ games, loading, error, onRetry, onNotify }) {
   const navigate = useNavigate();
@@ -20,15 +20,15 @@ export default function Home({ games, loading, error, onRetry, onNotify }) {
 
   return (
     <main className="main-content">
-      <Hero onNotify={onNotify} games={games} />
-      <GameGrid 
+      <Hero />
+      <FeaturedGames 
         games={games}
         loading={loading}
         error={error}
         onRetry={onRetry}
         onSelectGame={handleSelectGame}
       />
-      <InfoSection />
+      <ArcadeCTA />
     </main>
   );
 }
